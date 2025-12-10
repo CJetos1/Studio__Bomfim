@@ -60,13 +60,13 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; }
         }
 
-        /* --- INTRO (Modificada para exigir clique) --- */
+        /* --- INTRO --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #fff0f3 0%, #eac0c9 100%); 
             z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
             transition: opacity 0.8s ease-in-out, visibility 0.8s; overflow: hidden;
-            cursor: pointer; /* Indica que é clicável */
+            cursor: pointer;
         }
         .intro-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         
@@ -92,7 +92,6 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(196, 30, 58, 0); }
         }
         
-        /* Botão Pulsante na Intro */
         .btn-enter {
             margin-top: 25px;
             background: var(--natal-red); color: white;
@@ -154,19 +153,38 @@
         }
         .price { font-size: 1.4rem; font-weight: 700; color: var(--natal-red); }
 
-        /* GALERIA */
+        /* --- GALERIA CORRIGIDA --- */
         .gallery-scroll {
-            display: flex; overflow-x: auto; gap: 15px; padding: 5px 0 15px 0;
-            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+            display: flex; 
+            overflow-x: auto; 
+            gap: 15px; 
+            padding: 5px 0 15px 0;
+            scroll-behavior: smooth; 
+            -webkit-overflow-scrolling: touch;
         }
         .gallery-scroll::-webkit-scrollbar { height: 4px; }
         .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(196, 30, 58, 0.3); border-radius: 10px; }
         .gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+        
         .gallery-item {
-            min-width: 130px; height: 170px; border-radius: 12px; overflow: hidden; position: relative;
-            box-shadow: 0 4px 8px rgba(183, 110, 121, 0.2); border: 2px solid #fff; flex-shrink: 0;
+            /* Tamanho ajustado para não ficar muito grande nem esticado */
+            flex: 0 0 auto;
+            width: 140px; 
+            aspect-ratio: 3/4; /* Mantém proporção de foto vertical */
+            border-radius: 12px; 
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 4px 8px rgba(183, 110, 121, 0.2); 
+            border: 2px solid #fff; 
         }
-        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .gallery-item img, .gallery-item video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Corta as laterais se necessário para preencher sem esticar */
+            display: block;
+        }
+        
         .video-tag {
             position: absolute; top: 8px; right: 8px; background: rgba(196, 30, 58, 0.8); color: #fff;
             font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; pointer-events: none;
@@ -277,8 +295,8 @@
 
     <div class="snow-container" id="snowContainer"></div>
 
-    <audio id="christmasAudio" loop>
-        <source src="musica.mp4" type="audio/mpeg">
+    <audio id="christmasAudio" loop playsinline>
+        <source src="musica.mp4" type="audio/mp4">
     </audio>
 
     <div class="music-control" onclick="toggleMusic()"><i id="musicIcon" class="fa-solid fa-music"></i></div>
@@ -440,17 +458,10 @@
 
     <script>
         // 1. INTRO COM CLIQUE (PARA ATIVAR SOM)
-        // O navegador bloqueia som automático. O clique no "Toque para Entrar" libera o som.
         function iniciarExperiencia() {
-            // Toca o áudio
             playAudioSafe();
-            
-            // Esconde a intro
             document.getElementById('intro-overlay').classList.add('intro-hidden');
             document.getElementById('site-wrapper').classList.add('site-visible');
-            
-            // Salva que já viu (para futuras visitas se quiser, ou removemos isso para sempre tocar a música)
-            // localStorage.setItem('introVisto', 'true'); 
         }
 
         // 2. COOKIES
@@ -470,13 +481,14 @@
         const musicBtn = document.querySelector(".music-control");
         const musicIcon = document.getElementById("musicIcon");
         let isPlaying = false;
-        audio.volume = 0.2; // Volume a 20% para não assustar
+        audio.volume = 0.2; 
 
         function playAudioSafe() {
             audio.play().then(() => {
                 isPlaying = true; updateMusicUI();
             }).catch(error => {
-                // Se falhar (ex: usuario bloqueou), nao faz nada, espera clique manual
+                // Erro comum no iOS se o usuário não interagiu ou o formato não bate
+                console.log("Autoplay bloqueado ou formato inválido:", error);
                 isPlaying = false; updateMusicUI();
             });
         }
@@ -522,7 +534,7 @@
             document.getElementById('modalPolitica').style.display = 'none';
         }
 
-        // 6. FUNÇÕES GERAIS (MANTIDAS)
+        // 6. FUNÇÕES GERAIS
         const SEU_TELEFONE = "5571989536279"; 
         const CHAVE_PIX = "71989536279";
         let servicoAtual = "", precoAtual = 0, avaliacaoNota = 5;
@@ -558,7 +570,6 @@
         function enviarWhatsAppDiretoGeral() { enviarWhatsApp("Olá Caroline! Tenho dúvidas sobre as unhas de Natal."); }
         function enviarWhatsApp(texto) { window.open(`https://wa.me/${SEU_TELEFONE}?text=${encodeURIComponent(texto)}`, '_blank'); }
         
-        // Fecha qualquer modal ao clicar fora
         window.onclick = function(event) {
             if (event.target == document.getElementById('modalPagamento')) fecharModal();
             if (event.target == document.getElementById('modalPolitica')) fecharPolitica();
