@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Agende seu horário com Caroline Bomfim - Nail Designer em Salvador.">
+    <meta name="theme-color" content="#fff0f3">
+    
+    <title>Caroline Bomfim | Nail Designer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" as="style">
+    <link rel="preload" href="logo.jpeg" as="image">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* --- TEMA ROSE GOLD + NATAL --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 50%, #fff 100%);
+            --rose-gold: #b76e79; 
+            --natal-red: #c41e3a;
+            --rose-dark: #a84f65;
+            --rose-light: #ffc3d0;
+            --branco: #ffffff;
+            --ouro: #FFD700; 
+            
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: 1px solid rgba(196, 30, 58, 0.15);
+            --glass-blur: blur(14px); 
+            --glass-shadow: 0 8px 32px rgba(168, 79, 101, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--rose-dark);
+            min-height: 100vh;
+            padding-bottom: calc(80px + env(safe-area-inset-bottom));
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- NEVE --- */
+        .snow-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .snowflake {
+            position: absolute; top: -10px; color: #fff; font-size: 1em; opacity: 0.8;
+            text-shadow: 0 0 5px rgba(0,0,0,0.1); animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* --- INTRO (Modificada para exigir clique) --- */
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #fff0f3 0%, #eac0c9 100%); 
+            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s; overflow: hidden;
+            cursor: pointer; /* Indica que é clicável */
+        }
+        .intro-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .sparkle {
+            position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8); opacity: 0; animation: float-sparkle 4s infinite ease-in-out;
+        }
+        .sparkle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; width: 3px; height: 3px; }
+        .sparkle:nth-child(2) { top: 80%; left: 80%; animation-delay: 1s; width: 5px; height: 5px; background: var(--rose-gold); }
+        .sparkle:nth-child(3) { top: 40%; left: 70%; animation-delay: 2s; width: 2px; height: 2px; }
+        @keyframes float-sparkle {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 0.8; transform: translateY(-20px) scale(1); }
+            100% { transform: translateY(-40px) scale(0); opacity: 0; }
+        }
+        .intro-logo-anim {
+            width: 140px; height: 140px; object-fit: contain; border-radius: 50%;
+            animation: breathe-aura 3s infinite ease-in-out; position: relative; z-index: 2; border: 3px solid white;
+        }
+        @keyframes breathe-aura {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 0 30px 10px rgba(196, 30, 58, 0.2); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(196, 30, 58, 0); }
+        }
+        
+        /* Botão Pulsante na Intro */
+        .btn-enter {
+            margin-top: 25px;
+            background: var(--natal-red); color: white;
+            padding: 12px 30px; border-radius: 50px;
+            font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(196, 30, 58, 0.4);
+            animation: pulse-btn 1.5s infinite;
+            border: 2px solid white;
+        }
+        @keyframes pulse-btn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .site-content { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+        .site-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER --- */
+        header { text-align: center; padding: 40px 20px 20px; position: relative; z-index: 2; }
+        .logo-wrapper { position: relative; display: inline-block; }
+        .santa-hat {
+            position: absolute; top: -28px; left: -8px; width: 85px; z-index: 10;
+            transform: rotate(-10deg); filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)); pointer-events: none;
+        }
+        .logo-img { 
+            width: 180px; height: 180px; object-fit: cover; border-radius: 50%; 
+            border: 4px solid var(--branco); box-shadow: 0 5px 15px rgba(196, 30, 58, 0.2);
+        }
+        .brand-name {
+            font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--natal-red);
+            margin-top: 10px; line-height: 1; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+        .brand-subtitle {
+            font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; color: var(--rose-gold); font-weight: 600;
+        }
+
+        /* --- CARDS --- */
+        .container { width: 90%; max-width: 450px; margin: 0 auto; position: relative; z-index: 2; padding-bottom: 40px; }
+        .card {
+            background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: var(--glass-border); box-shadow: var(--glass-shadow);
+            border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .card::before {
+            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px; 
+            background: linear-gradient(to bottom, var(--natal-red), var(--rose-gold));
+        }
+        .service-title {
+            font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: var(--rose-dark); 
+            font-weight: 700; margin-bottom: 5px; display: flex; align-items: center;
+        }
+        .rose-icon { color: var(--natal-red); margin-right: 10px; font-size: 1.2rem; }
+        .service-desc { font-size: 0.85rem; color: #666; margin-bottom: 15px; line-height: 1.4; font-weight: 400; }
+        .price-row {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid rgba(183, 110, 121, 0.2); padding-top: 15px;
+        }
+        .price { font-size: 1.4rem; font-weight: 700; color: var(--natal-red); }
+
+        /* GALERIA */
+        .gallery-scroll {
+            display: flex; overflow-x: auto; gap: 15px; padding: 5px 0 15px 0;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+        }
+        .gallery-scroll::-webkit-scrollbar { height: 4px; }
+        .gallery-scroll::-webkit-scrollbar-thumb { background: rgba(196, 30, 58, 0.3); border-radius: 10px; }
+        .gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+        .gallery-item {
+            min-width: 130px; height: 170px; border-radius: 12px; overflow: hidden; position: relative;
+            box-shadow: 0 4px 8px rgba(183, 110, 121, 0.2); border: 2px solid #fff; flex-shrink: 0;
+        }
+        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+        .video-tag {
+            position: absolute; top: 8px; right: 8px; background: rgba(196, 30, 58, 0.8); color: #fff;
+            font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; pointer-events: none;
+        }
+
+        /* AVALIAÇÃO */
+        .rating-box { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .stars-container { display: flex; gap: 8px; font-size: 1.8rem; cursor: pointer; }
+        .star-icon { color: #ddd; transition: color 0.2s, transform 0.2s; }
+        .star-icon.active { color: var(--ouro); transform: scale(1.1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+        .review-input {
+            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd;
+            font-family: 'Montserrat', sans-serif; font-size: 0.85rem; background: #fffdfd;
+            resize: none; outline: none; margin-bottom: 10px;
+        }
+        .review-input:focus { border-color: var(--natal-red); }
+
+        /* BOTOES */
+        .btn {
+            background: linear-gradient(45deg, var(--natal-red), var(--rose-gold)); 
+            border: none; border-radius: 50px; color: white; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; cursor: pointer; 
+            min-height: 40px; padding: 0 20px; display: flex; align-items: center; justify-content: center;
+            gap: 8px; text-decoration: none; box-shadow: 0 4px 10px rgba(196, 30, 58, 0.25);
+        }
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .social-btn { background: white; border: 1px solid var(--rose-gold); color: var(--rose-dark); }
+        .social-btn.whats { background-color: #25D366; color: white; border: none; }
+        .social-btn.insta { color: #bc1888; }
+
+        /* MÚSICA */
+        .music-control {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--natal-red); color: white;
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);
+            cursor: pointer; z-index: 999;
+            transition: transform 0.3s ease;
+        }
+        .music-control:active { transform: scale(0.9); }
+        .music-playing { animation: pulse-music 2s infinite; }
+        @keyframes pulse-music {
+            0% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(196, 30, 58, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0); }
+        }
+
+        /* BANNER COOKIES */
+        #cookie-banner {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.95); border-top: 1px solid var(--rose-gold);
+            padding: 15px 20px; z-index: 10000; display: none;
+            flex-direction: column; align-items: center; text-align: center;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .cookie-text { font-size: 0.75rem; color: #555; margin-bottom: 10px; line-height: 1.4; }
+        .cookie-btn {
+            background: var(--natal-red); color: white; border: none; padding: 8px 25px;
+            border-radius: 20px; font-size: 0.75rem; font-weight: bold; cursor: pointer;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(90, 58, 60, 0.7); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; z-index: 1000; padding: 20px;
+        }
+        .modal-content {
+            background: #fff; border: 1px solid var(--natal-red);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: var(--rose-dark);
+            padding: 30px 20px; border-radius: 25px; width: 100%; max-width: 360px; 
+            text-align: center; position: relative; animation: popUp 0.3s;
+            max-height: 80vh; overflow-y: auto;
+        }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 28px; padding: 5px; cursor: pointer; color: var(--natal-red); }
+        .pay-btn {
+            width: 100%; padding: 15px; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; margin-bottom: 10px;
+            background: #fdfdfd; border: 1px solid #ddd; color: #555;
+        }
+        .pay-btn.pix { border-color: var(--natal-red); color: var(--natal-red); background: #fff0f3; }
+        .warning-text {
+            font-size: 0.7rem; color: #d9534f; font-weight: bold; margin-top: 10px;
+            background: #fdeded; padding: 8px; border-radius: 5px; display: inline-block; width: 100%;
+        }
+        .pix-area { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from {opacity:0} to {opacity:1}}
+        .pix-key-box {
+            background: #f7f7f7; padding: 15px; border-radius: 10px;
+            font-family: monospace; font-size: 1.1rem; color: var(--rose-dark); border: 2px dashed var(--natal-red);
+            margin: 10px 0; user-select: text; word-break: break-all;
+        }
+        .btn-action { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .btn-copy { background: var(--natal-red); color: white; }
+        .btn-whats { background: #25D366; color: white; }
+        .btn-back { background: transparent; color: #999; margin-top: 5px; }
+        
+        footer { text-align: center; color: var(--rose-dark); font-size: 0.75rem; margin-top: 30px; opacity: 0.8; }
+        .footer-xmas { font-family: 'Great Vibes', cursive; font-size: 1.2rem; color: var(--natal-red); margin-top: 5px; }
+        .footer-link { color: var(--natal-red); text-decoration: underline; margin-top: 5px; display: inline-block; cursor: pointer;}
+        .lgpd-text { text-align: left; font-size: 0.8rem; line-height: 1.5; color: #555; margin-top: 15px; }
+        .lgpd-text h4 { color: var(--rose-dark); margin-top: 15px; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="snow-container" id="snowContainer"></div>
+
+    <audio id="christmasAudio" loop>
+        <source src="musica.mp4" type="audio/mpeg">
+    </audio>
+
+    <div class="music-control" onclick="toggleMusic()"><i id="musicIcon" class="fa-solid fa-music"></i></div>
+
+    <div id="intro-overlay" onclick="iniciarExperiencia()">
+        <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+        <img src="logo.jpeg" alt="Carregando..." class="intro-logo-anim">
+        <p style="margin-top: 15px; font-size: 0.8rem; letter-spacing: 2px; color: var(--rose-dark); opacity: 0.8;">CAROLINE BOMFIM</p>
+        
+        <div class="btn-enter">Toque para Entrar</div>
+    </div>
+
+    <div id="cookie-banner">
+        <p class="cookie-text">
+            Este site usa cookies para garantir a melhor experiência. Ao continuar, você concorda com nossa <a href="#" onclick="abrirPolitica()" style="color:var(--natal-red);">Política de Privacidade</a>. 🍪
+        </p>
+        <button class="cookie-btn" onclick="aceitarCookies()">Aceitar e Continuar</button>
+    </div>
+
+    <div id="site-wrapper" class="site-content">
+        <header>
+            <div class="logo-wrapper">
+                <img src="https://cdn-icons-png.flaticon.com/512/744/744546.png" class="santa-hat" alt="Gorro de Natal">
+                <img src="logo.jpeg" alt="Logo Caroline Bomfim" class="logo-img">
+            </div>
+            <h1 class="brand-name">Caroline Bomfim</h1>
+            <p class="brand-subtitle">Nail Designer</p>
+        </header>
+
+        <div class="container">
+            
+            <div class="card">
+                <h3 class="service-title"><i class="fa-solid fa-gift rose-icon"></i> Gel na Tips</h3>
+                <p class="service-desc">Alongamento resistente para arrasar nas festas!</p>
+                <div class="price-row">
+                    <span class="price">R$ 35,00</span>
+                    <button class="btn" onclick="abrirAgendamento('Gel na Tips', 35)"><i class="fab fa-whatsapp"></i> Agendar</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="service-title"><i class="fa-solid fa-wand-magic-sparkles rose-icon"></i> Banho de Gel</h3>
+                <p class="service-desc">Proteção e brilho intenso (blindagem) para seu Natal.</p>
+                <div class="price-row">
+                    <span class="price">R$ 30,00</span>
+                    <button class="btn" onclick="abrirAgendamento('Banho de Gel', 30)"><i class="fab fa-whatsapp"></i> Agendar</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="service-title"><i class="fa-regular fa-heart rose-icon"></i> Postiça Realista</h3>
+                <p class="service-desc">Aplicação rápida e perfeita para quem tem pressa.</p>
+                <div class="price-row">
+                    <span class="price">R$ 20,00</span>
+                    <button class="btn" onclick="abrirAgendamento('Postiça Realista', 20)"><i class="fab fa-whatsapp"></i> Agendar</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="service-title"><i class="fa-solid fa-camera-retro rose-icon"></i> Inspirações de Natal</h3>
+                <p class="service-desc">Arraste para o lado e escolha a sua ✨</p>
+                <div class="gallery-scroll">
+                    <div class="gallery-item"><img src="unha1.jpeg" loading="lazy" alt="Trabalho 1" onerror="this.src='https://placehold.co/300x400/ffe3e8/c41e3a?text=Foto+1'"></div>
+                    <div class="gallery-item"><img src="unha2.jpeg" loading="lazy" alt="Trabalho 2" onerror="this.src='https://placehold.co/300x400/ffe3e8/c41e3a?text=Foto+2'"></div>
+                    <div class="gallery-item"><img src="unha3.jpeg" loading="lazy" alt="Trabalho 3" onerror="this.src='https://placehold.co/300x400/ffe3e8/c41e3a?text=Foto+3'"></div>
+                    <div class="gallery-item">
+                        <span class="video-tag"><i class="fa-solid fa-play"></i> Vídeo</span>
+                        <video controls style="width:100%; height:100%; object-fit:cover;" loading="lazy"><source src="video1.mp4" type="video/mp4"></video>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="service-title"><i class="fa-regular fa-star rose-icon"></i> O que achou?</h3>
+                <p class="service-desc">Selecione as estrelas e deixe sua opinião:</p>
+                <div class="rating-box">
+                    <div class="stars-container">
+                        <i class="fa-solid fa-star star-icon" onclick="selecionarEstrela(1)"></i>
+                        <i class="fa-solid fa-star star-icon" onclick="selecionarEstrela(2)"></i>
+                        <i class="fa-solid fa-star star-icon" onclick="selecionarEstrela(3)"></i>
+                        <i class="fa-solid fa-star star-icon" onclick="selecionarEstrela(4)"></i>
+                        <i class="fa-solid fa-star star-icon" onclick="selecionarEstrela(5)"></i>
+                    </div>
+                    <textarea id="textoAvaliacao" class="review-input" rows="3" placeholder="Escreva seu comentário aqui..."></textarea>
+                    <button class="btn" onclick="enviarAvaliacaoWhatsApp()" style="width: 100%;"><i class="fa-regular fa-paper-plane"></i> Enviar Opinião</button>
+                </div>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <h3 class="service-title" style="justify-content: center; margin-bottom: 5px;">Siga nas Redes</h3>
+                <p class="service-desc" style="margin-bottom: 15px;">Acompanhe meus trabalhos e novidades</p>
+                <div class="social-grid">
+                    <a href="https://www.instagram.com/studio__bomfimm/" target="_blank" class="btn social-btn insta"><i class="fab fa-instagram"></i> Instagram</a>
+                    <button onclick="enviarWhatsAppDiretoGeral()" class="btn social-btn whats"><i class="fab fa-whatsapp"></i> Dúvidas</button>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>© 2025 Caroline Bomfim Nail Designer.<br>Salvador - BA</p>
+            <p class="footer-xmas">🎄 Feliz Natal e Boas Festas! 🎄</p>
+            <br>
+            <a onclick="abrirPolitica()" class="footer-link">Política de Privacidade (LGPD)</a>
+        </footer>
+    </div>
+
+    <div id="modalPagamento" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <h3 style="color:var(--natal-red); font-family:'Great Vibes', cursive; font-size: 2rem; margin-bottom: 5px;">Pagamento</h3>
+            <div style="background: #fff0f3; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed var(--natal-red);">
+                <p id="servicoSelecionado" style="font-weight: 700; color: var(--rose-dark); margin-bottom: 5px;"></p>
+                <p id="precoSelecionado" style="color: var(--natal-red); font-size: 1.5rem; font-weight: bold;"></p>
+            </div>
+            <div id="menu-pagamento">
+                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #777;">Escolha como deseja pagar:</p>
+                <button class="pay-btn pix" onclick="mostrarAreaPix()"><i class="fa-brands fa-pix"></i> Pix (Copia e Cola)</button>
+                <button class="pay-btn money" onclick="pagarDinheiro()"><i class="fa-solid fa-money-bill-wave"></i> Dinheiro (No Local)</button>
+                <div style="margin-top: 15px;"><span class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> Cartão indisponível no momento</span></div>
+            </div>
+            <div id="area-pix" class="pix-area">
+                <p style="font-size:0.9rem; color: #555;">Copie a chave abaixo:</p>
+                <div class="pix-key-box" id="chavePixTexto">71989536279</div>
+                <button class="btn-action btn-copy" onclick="copiarChave()"><i class="fa-regular fa-copy"></i> Copiar Chave</button>
+                <button class="btn-action btn-whats" onclick="enviarComprovante()"><i class="fab fa-whatsapp"></i> Enviar Comprovante</button>
+                <button class="btn-action btn-back" onclick="voltarMenu()">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPolitica" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharPolitica()">&times;</span>
+            <h3 style="color:var(--natal-red); font-family:'Great Vibes', cursive; font-size: 1.8rem;">Política de Privacidade</h3>
+            
+            <div class="lgpd-text">
+                <p>A sua privacidade é importante para nós. Esta política explica como tratamos seus dados em conformidade com a <strong>LGPD (Lei Geral de Proteção de Dados)</strong>.</p>
+                
+                <h4>1. Coleta de Dados</h4>
+                <p>Este site <strong>não coleta nem armazena</strong> dados pessoais em servidores ou bancos de dados. As informações fornecidas (serviço escolhido) são enviadas diretamente para o WhatsApp da profissional, sem intermediários.</p>
+
+                <h4>2. Cookies e Armazenamento Local</h4>
+                <p>Utilizamos tecnologia de "Local Storage" no seu navegador apenas para melhorar sua experiência:</p>
+                <ul style="margin-left: 20px; font-size: 0.75rem;">
+                    <li>Lembrar se você já assistiu à introdução.</li>
+                    <li>Lembrar sua aceitação desta política.</li>
+                    <li>Otimizar o carregamento da música de fundo.</li>
+                </ul>
+
+                <h4>3. Consentimento</h4>
+                <p>Ao utilizar nossos serviços e clicar em "Aceitar" no banner inicial, você concorda com o processamento limitado descrito acima.</p>
+
+                <h4>4. Contato</h4>
+                <p>Para dúvidas sobre seus dados, entre em contato diretamente pelo botão de WhatsApp disponível no site.</p>
+            </div>
+
+            <button class="btn" onclick="fecharPolitica()" style="width: 100%; margin-top: 15px;">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. INTRO COM CLIQUE (PARA ATIVAR SOM)
+        // O navegador bloqueia som automático. O clique no "Toque para Entrar" libera o som.
+        function iniciarExperiencia() {
+            // Toca o áudio
+            playAudioSafe();
+            
+            // Esconde a intro
+            document.getElementById('intro-overlay').classList.add('intro-hidden');
+            document.getElementById('site-wrapper').classList.add('site-visible');
+            
+            // Salva que já viu (para futuras visitas se quiser, ou removemos isso para sempre tocar a música)
+            // localStorage.setItem('introVisto', 'true'); 
+        }
+
+        // 2. COOKIES
+        window.addEventListener('load', () => {
+            if (!localStorage.getItem('cookiesAceitos')) {
+                setTimeout(() => { document.getElementById('cookie-banner').style.display = 'flex'; }, 1000);
+            }
+        });
+
+        function aceitarCookies() {
+            localStorage.setItem('cookiesAceitos', 'true');
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+
+        // 3. ÁUDIO
+        const audio = document.getElementById("christmasAudio");
+        const musicBtn = document.querySelector(".music-control");
+        const musicIcon = document.getElementById("musicIcon");
+        let isPlaying = false;
+        audio.volume = 0.2; // Volume a 20% para não assustar
+
+        function playAudioSafe() {
+            audio.play().then(() => {
+                isPlaying = true; updateMusicUI();
+            }).catch(error => {
+                // Se falhar (ex: usuario bloqueou), nao faz nada, espera clique manual
+                isPlaying = false; updateMusicUI();
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) { audio.pause(); isPlaying = false; } 
+            else { audio.play(); isPlaying = true; }
+            updateMusicUI();
+        }
+
+        function updateMusicUI() {
+            if (isPlaying) {
+                musicIcon.classList.remove("fa-music"); musicIcon.classList.add("fa-pause");
+                musicBtn.classList.add("music-playing");
+            } else {
+                musicIcon.classList.remove("fa-pause"); musicIcon.classList.add("fa-music");
+                musicBtn.classList.remove("music-playing");
+            }
+        }
+
+        // 4. NEVE
+        function createSnow() {
+            const container = document.getElementById('snowContainer');
+            for (let i = 0; i < 20; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake'); snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(snowflake);
+            }
+        }
+        createSnow();
+
+        // 5. FUNÇÕES DE MODAL LGPD
+        function abrirPolitica() {
+            document.body.style.overflow = 'hidden';
+            document.getElementById('modalPolitica').style.display = 'flex';
+        }
+        function fecharPolitica() {
+            document.body.style.overflow = 'auto';
+            document.getElementById('modalPolitica').style.display = 'none';
+        }
+
+        // 6. FUNÇÕES GERAIS (MANTIDAS)
+        const SEU_TELEFONE = "5571989536279"; 
+        const CHAVE_PIX = "71989536279";
+        let servicoAtual = "", precoAtual = 0, avaliacaoNota = 5;
+
+        function selecionarEstrela(nota) {
+            avaliacaoNota = nota;
+            document.querySelectorAll('.star-icon').forEach((estrela, index) => {
+                if (index < nota) estrela.classList.add('active'); else estrela.classList.remove('active');
+            });
+        }
+        window.onload = function() { selecionarEstrela(5); }
+
+        function enviarAvaliacaoWhatsApp() {
+            const texto = document.getElementById('textoAvaliacao').value;
+            let estrelas = ""; for(let i=0; i<avaliacaoNota; i++) { estrelas += "⭐"; }
+            enviarWhatsApp(`Olá Caroline! Minha avaliação de Natal 🎄:\n\nNota: ${estrelas} (${avaliacaoNota}/5)\nComentário: ${texto ? texto : "Adorei!"}`);
+            document.getElementById('textoAvaliacao').value = "";
+        }
+
+        function abrirAgendamento(nome, preco) {
+            servicoAtual = nome; precoAtual = preco;
+            document.getElementById('servicoSelecionado').innerText = nome;
+            document.getElementById('precoSelecionado').innerText = `R$ ${preco},00`;
+            voltarMenu(); document.body.style.overflow = 'hidden'; 
+            document.getElementById('modalPagamento').style.display = 'flex';
+        }
+        function fecharModal() { document.body.style.overflow = 'auto'; document.getElementById('modalPagamento').style.display = 'none'; }
+        function mostrarAreaPix() { document.getElementById('menu-pagamento').style.display = 'none'; document.getElementById('area-pix').style.display = 'flex'; }
+        function voltarMenu() { document.getElementById('area-pix').style.display = 'none'; document.getElementById('menu-pagamento').style.display = 'block'; }
+        function copiarChave() { navigator.clipboard.writeText(CHAVE_PIX).then(() => { alert("Chave Pix copiada!"); }); }
+        function enviarComprovante() { enviarWhatsApp(`Olá Caroline! Pix de R$ ${precoAtual},00 para *${servicoAtual}*. Comprovante anexo.`); }
+        function pagarDinheiro() { enviarWhatsApp(`Olá Caroline! Agendando *${servicoAtual}* (R$ ${precoAtual},00). Pagamento em *DINHEIRO* no local.`); fecharModal(); }
+        function enviarWhatsAppDiretoGeral() { enviarWhatsApp("Olá Caroline! Tenho dúvidas sobre as unhas de Natal."); }
+        function enviarWhatsApp(texto) { window.open(`https://wa.me/${SEU_TELEFONE}?text=${encodeURIComponent(texto)}`, '_blank'); }
+        
+        // Fecha qualquer modal ao clicar fora
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modalPagamento')) fecharModal();
+            if (event.target == document.getElementById('modalPolitica')) fecharPolitica();
+        }
+    </script>
+</body>
+</html>
